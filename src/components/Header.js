@@ -31,7 +31,7 @@ const Header = () => {
 
     dispatch(removeUser(null));  // remove the user data from redux store
 
-    dispatch(emptyUser(null));
+    //dispatch(emptyUser(null));
     
   
     
