@@ -55,6 +55,10 @@ function Leftmenu(props) {
             {/* Add more submenu items as needed */}
           </ul>
         </li>
+
+        <li>
+          <Link to="/admin/job_create">Create Job</Link>
+        </li>
         {/* Add more menu items as needed */}
       </ul>
     </nav>

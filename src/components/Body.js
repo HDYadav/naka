@@ -3,6 +3,7 @@ import Login from './Login'
 import { RouterProvider, createBrowserRouter } from "react-router-dom"; 
 import Dashboard from './Dashboard';
 import Users from './Users';
+import CreateJob from './Jobs/CreateJob';
  
 
 const Body = () => { 
@@ -19,6 +20,10 @@ const Body = () => {
       {
         path: "/users",
         element: <Users />,
+      },
+      {
+        path: "/admin/job_create",
+        element: <CreateJob />,
       },
     ]);
 
