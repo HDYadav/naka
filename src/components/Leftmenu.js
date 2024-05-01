@@ -48,7 +48,7 @@ const Leftmenu = (props) => {
               className="text-[15px] ml-4 w-full bg-transparent focus:outline-none"
             />
           </div> */}
-          <Link to="/dashboard">
+          <Link onClick={toggleSidebarHandler} to="/dashboard">
             <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
               <FaHome />
               <span className="text-[15px] ml-4 text-gray-200 font-bold">
@@ -71,24 +71,24 @@ const Leftmenu = (props) => {
           </div>
           {isDropdownOpen && (
             <div className="text-left text-sm mt-2 w-4/5 mx-auto text-gray-200 font-bold">
-              <Link to="/users">
+              <Link onClick={toggleSidebarHandler} to="/users">
                 <h1 className="cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1">
                   Naukri.com
                 </h1>
               </Link>
-              <Link to="/users">
+              <Link onClick={toggleSidebarHandler} to="/users">
                 <h1 className="cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1">
                   Linkedin
                 </h1>
               </Link>
-              <Link to="/users">
+              <Link onClick={toggleSidebarHandler} to="/users">
                 <h1 className="cursor-pointer p-2 hover:bg-blue-600 rounded-md mt-1">
                   Indeed
                 </h1>
               </Link>
             </div>
           )}
-          <Link to="/admin/job_create">
+          <Link onClick={toggleSidebarHandler} to="/admin/job_create">
             <div className="p-2.5 mt-3 flex items-center rounded-md px-4 duration-300 cursor-pointer hover:bg-blue-600 text-white">
               <FaUserPlus />
               <span className="text-[15px] ml-4 text-gray-200 font-bold">
