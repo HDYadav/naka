@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import LayoutHOC from "./LayoutHOC";
 import useAllUserData from "../hooks/useAllUserData";
 import Shimmer from "./Shimmer";
+import { useSelector } from "react-redux";
 
 function Users() {
   const usersPerPage = 5; // Number of users to display per page
@@ -9,6 +10,7 @@ function Users() {
   const [searchQuery, setSearchQuery] = useState(""); // State to manage search query
   const [filteredUsers, setFilteredUsers] = useState([]); // State to manage filtered users
   const users = useAllUserData();
+  const isSidebarOpen = useSelector((store) => store.commanSlice.isSidebarOpen);
 
   useEffect(() => {
     if (users) {
@@ -38,35 +40,122 @@ function Users() {
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className="p-8 ml-44 overflow-x-auto">
+    <div
+      className={`p-8 pb-20 ${
+        isSidebarOpen ? "w-[calc(100%-300px)] ml-[300px]" : "w-full"
+      }`}
+    >
       <div className="mb-4">
-        <input
-          type="text"
-          placeholder="Search by name or email"
-          value={searchQuery}
-          onChange={handleSearch}
-          className="px-4 py-2 border rounded"
-        />
+        <label htmlFor="table-search" className="sr-only">
+          Search
+        </label>
+        <div className="relative">
+          <div className="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg
+              className="w-4 h-4 text-gray-500 dark:text-gray-400"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 20 20"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+              />
+            </svg>
+          </div>
+          <input
+            type="text"
+            id="table-search-users"
+            className="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Search for users"
+          />
+        </div>
       </div>
       {users ? (
-        <table className="table-auto min-w-full">
-          <thead>
-            <tr>
-              <th className="px-4 py-2">Name</th>
-              <th className="px-4 py-2">Mobile</th>
-              <th className="px-4 py-2">Email</th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentUsers.map((user) => (
-              <tr key={user.id}>
-                <td className="border px-4 py-2">{user.name}</td>
-                <td className="border px-4 py-2">{user.mobile}</td>
-                <td className="border px-4 py-2">{user.email}</td>
+        <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+              <tr>
+                <th scope="col" className="p-4">
+                  <div className="flex items-center">
+                    <input
+                      id="checkbox-all-search"
+                      type="checkbox"
+                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                    />
+                    <label htmlFor="checkbox-all-search" className="sr-only">
+                      checkbox
+                    </label>
+                  </div>
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Name
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Position
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Mobile
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Status
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {currentUsers.map((user) => (
+                <tr
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+                  key={user.id}
+                >
+                  <td className="w-4 p-4">
+                    <div className="flex items-center">
+                      <input
+                        id="checkbox-table-search-1"
+                        type="checkbox"
+                        className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                      />
+                      <label
+                        htmlFor="checkbox-table-search-1"
+                        className="sr-only"
+                      >
+                        checkbox
+                      </label>
+                    </div>
+                  </td>
+                  <th
+                    scope="row"
+                    className="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white"
+                  >
+                    <img
+                      className="w-10 h-10 rounded-full"
+                      src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                      alt="Jese image"
+                    />
+                    <div className="ps-3">
+                      <div className="text-base font-semibold">{user.name}</div>
+                      <div className="font-normal text-gray-500">
+                        {user.email}
+                      </div>
+                    </div>
+                  </th>
+                  <td className="px-6 py-4">React Developer</td>
+                  <td className="px-6 py-4">{user.mobile}</td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center">
+                      <div className="h-2.5 w-2.5 rounded-full bg-green-500 me-2" />{" "}
+                      Online
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       ) : (
         <Shimmer />
       )}
